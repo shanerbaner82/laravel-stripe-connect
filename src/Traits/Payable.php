@@ -114,6 +114,11 @@ trait Payable
 
     public function getExpressDashboardLink()
     {
-        return static::$stripe->accounts->createLoginLink(auth()->user()->getStripeAccountId())->url;
+        return static::$stripe->accounts->createLoginLink($this->getStripeAccountId())->url;
+    }
+
+    public function canAcceptCapability(string $capability = 'transfers')
+    {
+        return static::$stripe->accounts->retrieveCapability($this->getStripeAccountId(), $capability)->status === 'active';
     }
 }
