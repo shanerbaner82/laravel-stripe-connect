@@ -111,4 +111,9 @@ trait Payable
     {
         return Config::get('stripe_connect.payable.account_status_column');
     }
+
+    public function getExpressDashboardLink()
+    {
+        return static::$stripe->accounts->createLoginLink(auth()->user()->getStripeAccountId())->url;
+    }
 }
